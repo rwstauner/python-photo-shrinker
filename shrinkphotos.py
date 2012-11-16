@@ -58,6 +58,11 @@ def thumbnail(src, dest):
 
 def shrinkarg(arg):
   "use command line arg as source dir"
+
+  if arg == '' or arg == '.':
+    arg = os.getcwd()
+  arg = os.path.normpath(arg)
+
   top, src = dirname(arg), basename(arg)
   dest = "%s-shrunk" % src
   shrinkphotos(top, src, dest)
@@ -65,11 +70,8 @@ def shrinkarg(arg):
 # if dir specified on command line
 if len(sys.argv) > 1:
   shrinkarg(sys.argv[1])
-  exit(0)
+# else use the parent dir of the script
+else:
+  shrinkarg(dirname(sys.argv[0]))
 
-# configuration:
-TOP    = '/tmp/pypics'
-SOURCE = 'src'
-COPY   = 'dest'
-
-shrinkphotos(TOP, SOURCE, COPY)
+exit(0)
