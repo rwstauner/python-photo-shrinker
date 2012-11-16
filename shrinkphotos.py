@@ -16,7 +16,15 @@ def shrinkphotos(top, src, dest):
   "shrink each file in top/src/* and save in top/dest/*"
   os.chdir(top)
   src_full, dest_full = [join(top, x) for x in [src, dest]]
-  recurse(src_full, dest_full)
+
+  print "shrinking images found in\n  %s\nand saving to\n  %s" % \
+    (src_full, dest_full)
+
+  if isdir(dest_full):
+    print "destination %s already exists" % (dest_full)
+
+  if raw_input("\ncontinue? (y/n): ").lower() == 'y':
+    recurse(src_full, dest_full)
 
 def recurse(src, dest):
   "down, down, down"
