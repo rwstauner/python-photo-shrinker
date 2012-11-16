@@ -48,6 +48,17 @@ def thumbnail(src, dest):
   img.thumbnail((1600, 1200))
   img.save(dest, quality=85)
 
+def shrinkarg(arg):
+  "use command line arg as source dir"
+  top, src = dirname(arg), basename(arg)
+  dest = "%s-shrunk" % src
+  shrinkphotos(top, src, dest)
+
+# if dir specified on command line
+if len(sys.argv) > 1:
+  shrinkarg(sys.argv[1])
+  exit(0)
+
 # configuration:
 TOP    = '/tmp/pypics'
 SOURCE = 'src'
