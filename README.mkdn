@@ -55,3 +55,9 @@ Will create:
 
     C:\Foo\Bar-shrunk\baz\hello-shrunk.jpg
     C:\Foo\Bar-shrunk\baz\qux\there-shrunk.jpg
+
+# License
+
+Copyright (c) 2012 Randy Stauner
+
+Licensed under the [MIT License](http://opensource.org/licenses/MIT)

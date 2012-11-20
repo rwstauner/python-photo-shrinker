@@ -2,6 +2,9 @@
 
 "shrink photos so that it doesn't take 8 days to transfer them"
 
+# Copyright (c) 2012 Randy Stauner
+# Licensed under the MIT License: http://opensource.org/licenses/MIT
+
 from PIL import Image
 
 import os
