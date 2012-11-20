@@ -1,0 +1,57 @@
+# Description
+
+Shrink a directory of photos to ease transferring them over the internet.
+
+Photos are resized to 1600x1200 with and set jpeg compression quality to 85.
+(Currently these values are embedded and can be changed in the source.)
+
+It was hacked together with the intention of maximum ease of use:
+
+* Download script
+* Copy to directory of photos
+* Run (Double-click)
+
+It's simple enough that configuration or behavior can be tweaked
+by just altering the source code before sending or using it.
+
+# Installation
+
+Python (and PIL) install _fairly_ easily onto a windows machine:
+
+* Download and install [python 2.7](http://python.org/download/)
+* Download and install [PIL - Python Imaging Library](http://pypi.python.org/pypi/PIL/)
+  (downloads available at http://effbot.org/downloads/#pil)
+
+(and much easier onto a linux machine.)
+
+# Usage
+
+Copy this script into the directory containing the photos
+(and subdirectories of photos...) you wish to shrink.
+Double click the script to run it.
+A command window will display to show you the directory it will copy
+and ask for confirmation.
+
+The shrunken photos will be placed in a directory of the same name as the source
+with `-shrunk` appended.
+It will also append `-shrunk` to the name of the file (before the extension).
+
+If you place the script in `C:\Foo\Bar`
+the smaller photos will be in `C:\Foo\Bar-shrunk`.
+
+Alternatively you can call the script from anywhere passing the name of the source
+directory on the command line.
+
+# Example
+
+Starting with this:
+
+    C:\Foo\Bar\shrinkphotos.py
+    C:\Foo\Bar\baz\hello.jpg
+    C:\Foo\Bar\baz\qux\there.jpg
+    C:\Foo\Bar\baz\qux\README.txt
+
+Will create:
+
+    C:\Foo\Bar-shrunk\baz\hello-shrunk.jpg
+    C:\Foo\Bar-shrunk\baz\qux\there-shrunk.jpg
