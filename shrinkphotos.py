@@ -29,14 +29,18 @@ def shrinkphotos(top, src, dest):
   print "shrinking images found in\n  %s\nand saving to\n  %s" % \
     (src_full, dest_full)
 
+  # Just a warning; Allow the script to be re-run.
   if isdir(dest_full):
     print "destination %s already exists" % (dest_full)
 
   if raw_input("\ncontinue? (y/n): ").lower() == 'y':
     recurse(src_full, dest_full)
 
+
 def recurse(src, dest):
   "down, down, down"
+
+  # I suppose this could be allowed as long as there is a FILE_SUFFIX
   if src == dest:
     raise "source and destination directories should not be the same!"
 
@@ -48,32 +52,41 @@ def recurse(src, dest):
 
   for name in files:
     if isfile(join(src, name)):
+      # If the file name matches the re (has the right extension)
       if PIC_RE.search(name):
-        # file-shrunk.jpg
+        # src/file.jpg => dest/file-shrunk.jpg
         dest_file = join(dest, PIC_RE.sub(r'%s\1' % FILE_SUFFIX, name))
         # skip if already exists
         if not isfile(dest_file):
+          # Ensure destination directory exists
           if not isdir(dest):
             os.makedirs(dest)
           thumbnail(join(src, name), dest_file)
+    # descend to the next directory
     elif isdir(join(src, name)):
       recurse(join(src, name), join(dest, name))
+
 
 def thumbnail(src, dest):
   "shrink src and save to dest"
   img = Image.open(src)
+  # Ensure image is not larger than RESOLUTION.
   img.thumbnail(RESOLUTION)
+  # Set compression level on the new image.
   img.save(dest, quality=QUALITY)
+
 
 def shrinkarg(arg):
   "use command line arg as source dir"
 
   if arg == '' or arg == '.':
     arg = os.getcwd()
+  # Strip trailing slash, etc
   arg = os.path.normpath(arg)
 
   top, src = dirname(arg), basename(arg)
   dest = "%s%s" % (src, DIR_SUFFIX)
+
   shrinkphotos(top, src, dest)
 
 # if dir specified on command line
