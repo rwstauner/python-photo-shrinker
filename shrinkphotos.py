@@ -10,7 +10,16 @@ from   os.path import join, isfile, isdir, dirname, basename
 import re
 import sys
 
-PIC_RE = re.compile(r'(\.jpe?g$)', re.I)
+# configuration
+
+DIR_SUFFIX  = '-shrunk'
+FILE_SUFFIX = '-shrunk'
+# PIC_RE should capture the file extension;
+# Later FILE_SUFFIX will be inserted before it
+PIC_RE      = re.compile(r'(\.jpe?g)$', re.I)
+QUALITY     = 85
+RESOLUTION  = (1600, 1200)
+
 
 def shrinkphotos(top, src, dest):
   "shrink each file in top/src/* and save in top/dest/*"
@@ -41,7 +50,7 @@ def recurse(src, dest):
     if isfile(join(src, name)):
       if PIC_RE.search(name):
         # file-shrunk.jpg
-        dest_file = join(dest, PIC_RE.sub(r'-shrunk\1', name))
+        dest_file = join(dest, PIC_RE.sub(r'%s\1' % FILE_SUFFIX, name))
         # skip if already exists
         if not isfile(dest_file):
           if not isdir(dest):
@@ -53,8 +62,8 @@ def recurse(src, dest):
 def thumbnail(src, dest):
   "shrink src and save to dest"
   img = Image.open(src)
-  img.thumbnail((1600, 1200))
-  img.save(dest, quality=85)
+  img.thumbnail(RESOLUTION)
+  img.save(dest, quality=QUALITY)
 
 def shrinkarg(arg):
   "use command line arg as source dir"
@@ -64,7 +73,7 @@ def shrinkarg(arg):
   arg = os.path.normpath(arg)
 
   top, src = dirname(arg), basename(arg)
-  dest = "%s-shrunk" % src
+  dest = "%s%s" % (src, DIR_SUFFIX)
   shrinkphotos(top, src, dest)
 
 # if dir specified on command line
