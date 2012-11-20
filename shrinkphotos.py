@@ -89,11 +89,11 @@ def shrinkarg(arg):
 
   shrinkphotos(top, src, dest)
 
-# if dir specified on command line
-if len(sys.argv) > 1:
-  shrinkarg(sys.argv[1])
-# else use the parent dir of the script
-else:
-  shrinkarg(dirname(sys.argv[0]))
 
-exit(0)
+if __name__ == "__main__":
+  # If a directory is specified on command line
+  if len(sys.argv) > 1:
+    shrinkarg(sys.argv[1])
+  # Else use the directory the script is in
+  else:
+    shrinkarg(dirname(sys.argv[0]))
